@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    {{ __('SEJA BEM VINDO!') }}
+                    <h1>Seja Bem-Vindo!</h1>
                 </div>
             </div>
         </div>
