@@ -9,3 +9,7 @@ Route::group(['middleware' => 'web'], function(){
 
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 });
+
+
+Route::get('/produtos/novo', [App\Http\Controllers\ProdutosController::class, 'create']);
+Route::post('/produtos/novo', [App\Http\Controllers\ProdutosController::class, 'store'])->name('registrar_produto');
