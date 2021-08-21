@@ -9,7 +9,7 @@ Você vai criar uma aplicação de cadastro de pedidos de compra, a partir de um
 modelagem inicial, com as seguintes funcionalidades:
 
 <!--ts-->
-- [ ] CRUD de produtos.
+- [X] CRUD de produtos.
 - [ ] CRUD de pedidos de compra, com status (Em Aberto, Pago ou Cancelado).
 - [ ] Cada CRUD:
   - [ ] deve ser filtrável e ordenável por qualquer campo, e possuir paginação
