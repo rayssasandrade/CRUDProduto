@@ -10,14 +10,7 @@ class ProdutosController extends Controller
     public function create(){
         return view('produtos.create');
     }
-
-    public function search(Request $request){
-        $filters = $request->all();
-
-        $produtos = $this->repository->search($request->filter);
-        return view('produtos.index', ['produtos' => $produtos, 'filtros' => $filters]);
-    }
-
+    
     public function store(Request $request){
         Produto::create([
             'nome' => $request->nome,
