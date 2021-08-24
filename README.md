@@ -10,13 +10,13 @@ modelagem inicial, com as seguintes funcionalidades:
 
 <!--ts-->
 - [X] CRUD de produtos.
-- [ ] CRUD de pedidos de compra, com status (Em Aberto, Pago ou Cancelado).
+- [X] CRUD de pedidos de compra, com status (Em Aberto, Pago ou Cancelado).
 - [ ] Cada CRUD:
   - [ ] deve ser filtrável e ordenável por qualquer campo, e possuir paginação
 de 20 itens.
-  - [ ] deve possuir formulários para criação e atualização de seus itens.
-  - [ ] deve permitir a deleção de qualquer item de sua lista.
-- [ ] Barra de navegação entre os CRUDs.
+  - [X] deve possuir formulários para criação e atualização de seus itens.
+  - [X] deve permitir a deleção de qualquer item de sua lista.
+- [X] Barra de navegação entre os CRUDs.
 - [ ] Links para os outros CRUDs nas listagens (Ex: link para o detalhe do cliente
 da compra na lista de pedidos de compra)
 <!--te-->
