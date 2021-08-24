@@ -11,6 +11,13 @@ class ProdutosController extends Controller
         return view('produtos.create');
     }
 
+    public function search(Request $request){
+        $filters = $request->all();
+
+        $produtos = $this->repository->search($request->filter);
+        return view('produtos.index', ['produtos' => $produtos, 'filtros' => $filters]);
+    }
+
     public function store(Request $request){
         Produto::create([
             'nome' => $request->nome,
@@ -19,12 +26,18 @@ class ProdutosController extends Controller
             'quantidade' => $request->quantidade,
         ]);
 
-        return "Produto Criado com Sucesso!";
+        $produtos = Produto::paginate(20); 
+        return view('produtos.index', ['produtos' => $produtos]);
     }
 
     public function show($id){
         $produto = Produto::findOrFail($id);
         return view('produtos.show', ['produto' => $produto]);
+    }
+
+    public function index(){
+        $produtos = Produto::paginate(20); 
+        return view('produtos.index', ['produtos' => $produtos]);
     }
 
     public function edit($id){
@@ -43,7 +56,8 @@ class ProdutosController extends Controller
             'quantidade' => $request->quantidade,
         ]);
 
-        return "Produto Atualizado com Sucesso!";
+        $produtos = Produto::paginate(20); 
+        return view('produtos.index', ['produtos' => $produtos]);
     }
 
     public function delete($id){
@@ -54,6 +68,8 @@ class ProdutosController extends Controller
     public function destroy($id){
         $produto = Produto::findOrFail($id);
         $produto->delete();
-        return "Produto Excluído com Sucesso";
+
+        $produtos = Produto::paginate(20); 
+        return view('produtos.index', ['produtos' => $produtos]);
     }
 }
