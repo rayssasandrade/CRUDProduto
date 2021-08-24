@@ -61,6 +61,7 @@
                     @endforelse
                 </tbody>
             </table>
+        {!! $produtos->links() !!}
         </div>
     </div>
 @endsection
