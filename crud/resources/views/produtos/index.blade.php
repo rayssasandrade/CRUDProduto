@@ -42,11 +42,8 @@
                             </td>
                             <td class="text-center">
                                 <form action="{{ route('excluir_produto',['id' => $produto->id]) }}" method="POST">
-
-
                                     @csrf
                                     @method('DELETE')
-
                                     <button type="submit" class="btn btn-danger">Deletar</button>
                                 </form>
 

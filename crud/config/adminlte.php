@@ -237,8 +237,13 @@ return [
         ],
         [
             'text'    => 'Início',
-            'icon'    => 'fas fa-store',
+            'icon'    => 'fas fa-home',
             'url'     => '/home',
+        ],
+        [
+            'text'    => 'Comprar',
+            'icon'    => 'fas fa-store',
+            'url'     => '/comprar',
         ],
         [
             'text'    => 'Carrinho',
@@ -266,10 +271,6 @@ return [
                 [
                     'text' => 'Listar',
                     'url'  => '/pedidos',
-                ],
-                [
-                    'text' => 'Cadastrar',
-                    'url'  => '/pedido/novo',
                 ],
             ],
         ],
