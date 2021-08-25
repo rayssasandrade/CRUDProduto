@@ -12,7 +12,7 @@ modelagem inicial, com as seguintes funcionalidades:
 - [X] CRUD de produtos.
 - [X] CRUD de pedidos de compra, com status (Em Aberto, Pago ou Cancelado).
 - [ ] Cada CRUD:
-  - [ ] deve ser filtrável e ordenável por qualquer campo, e possuir paginação
+  - [X] deve ser filtrável e ordenável por qualquer campo, e possuir paginação
 de 20 itens.
   - [X] deve possuir formulários para criação e atualização de seus itens.
   - [X] deve permitir a deleção de qualquer item de sua lista.
