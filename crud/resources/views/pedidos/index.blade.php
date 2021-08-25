@@ -3,17 +3,16 @@
 
 @section('content')
     <h1>Pedidos</h1>
-    <a url="/comprar">Comprar mais</a>
+    <a url="/loja">Voltar a Loja</a>
     <hr>
     <div class="container">
         <div class="col-md-12 table-responsive">
             <table id="tabelaPedidos" class="table table-hover">
                 <thead>
                     <tr>
-                        <th>Id</th>
-                        <th>Cliente</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
+                        <th>Pedido nº:</th>
+                        <th>Cliente nº</th>
+                        <th>Valor</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -22,28 +21,20 @@
                         <tr>
                             <td class="white-space">{{ $pedido->id }}</td>
                             <td>{{ $pedido->cliente_id }}</td>
-                            <td>{{ $pedido->produto_id }}</td>
-                            <td>{{ $pedido->quantidade }}</td>
-                            <td>
-                                <?php
-                                if ($pedido->status = 1) {
-                                    echo "em aguardo";
-                                } elseif ($pedido->status = 2) {
-                                    echo "pago";
-                                } else {
-                                    echo "cancelado";
-                                }
-                                ?>
-                            </td>
-
-                            <td class="text-center">
-                                <form action="{{ route('alterar_pedido',['id' => $pedido->id], ['status' => 2]) }}" method="POST">
+                            <td>{{ $pedido->valor }}</td>
+                            <td>{{ $pedido->status }}</td>
+                            <td class="text-center" style="display: flex; align-items: flex-start; justify-content: center;">
+                                <a class="btn btn-success"
+                                    href="{{ route('alterar_pedido', ['id' => $pedido->id]) }}">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a class="btn btn-primary" href="{{ route('ver_pedido', ['id' => $pedido->id]) }}">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <form action="{{ route('excluir_pedido', ['id' => $pedido->id]) }}" method="POST" onsubmit="return confirm('Está certo da exclusão?')">
                                     @csrf
-                                    <button type="submit" class="btn btn-success">Pagar</button>
+                                    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </form>
-                            </td>
-                            <td class="text-center">
-                                <a class="btn btn-danger" href="{{ route('alterar_pedido',['id' => $pedido->id], 3) }}">Cancelar</a>
                             </td>
                         </tr>
                     @empty

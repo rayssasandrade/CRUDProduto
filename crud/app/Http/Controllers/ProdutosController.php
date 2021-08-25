@@ -19,8 +19,13 @@ class ProdutosController extends Controller
             'quantidade' => $request->quantidade,
         ]);
 
-        $produtos = Produto::paginate(20); 
-        return view('produtos.index', ['produtos' => $produtos]);
+        $request->session()
+            ->flash(
+                'message',
+                "Produto {$request->nome} cadastrado com sucesso"
+            );
+       
+        return redirect ('/produtos');
     }
 
     public function show($id){

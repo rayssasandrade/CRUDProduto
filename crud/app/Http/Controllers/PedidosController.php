@@ -3,28 +3,39 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use App\Http\Requests\PedidoRequest;
+
 use App\Models\Pedido;
+
+use App\Models\Cliente;
+
+use App\Models\Pedido_Pedido;
+
+use Illuminate\Support\Facades\DB;
 
 class PedidosController extends Controller
 {
-    //status: 1- em aberto, 2- pago, 3- cancelado
-    public function search(Request $request){
-        $filters = $request->all();
-
-        $pedidos = $this->repository->search($request->filter);
-        return view('pedidos.index', ['pedidos' => $pedidos, 'filtros' => $filters]);
+    public function index(){
+        $pedidos = Pedido::paginate(20); 
+        return view('pedidos.index', ['pedidos' => $pedidos]);
     }
 
     public function store(Request $request){
         Pedido::create([
-            'cliente_id' => $request->cliente_id,
-            'produto_id' => $request->produto_id,
+            'nome' => $request->nome,
+            'custo' => $request->custo,
+            'preco' => $request->preco,
             'quantidade' => $request->quantidade,
-            'status' => $request->status,
         ]);
 
-        $pedidos = Pedido::paginate(20); 
-        return view('pedidos.index', ['pedidos' => $pedidos]);
+        $request->session()
+            ->flash(
+                'message',
+                "Pedido {$request->nome} cadastrado com sucesso"
+            );
+       
+        return redirect ('/pedidos');
     }
 
     public function show($id){
@@ -32,26 +43,31 @@ class PedidosController extends Controller
         return view('pedidos.show', ['pedido' => $pedido]);
     }
 
-    public function index(){
-        $pedidos = Pedido::paginate(20); 
-        return view('pedidos.index', ['pedidos' => $pedidos]);
-    }
-
     public function edit($id){
         $pedido = Pedido::findOrFail($id);
-        return view('pedidos.edit', ['pedido' => $pedido]);
+        $produto = Produto::findOrFail($pedido->produto_id);
+        $produtos = DB::table('pedidos')
+        ->join('pedido__produtos','pedidos.id','=','pedido__produtos.pedido_id')
+        ->where('pedido__produtos.pedido_id','=',$pedido->id)
+        ->join('produtos','pedido__produtos.produto_id','=','produtos.id')
+        ->where('pedido__produtos.status','=','Ativo')
+        ->select('produtos.*','pedido__produtos.qtd','pedido__produtos.id as op_id')
+        ->get();
+        $cliente = Cliente::find($pedido->cliente_id);
+        return view('pedidos.edit', ['pedido' => $pedido], ['cliente' => $cliente], ['produtos' => $produtos]);
     }
 
-    public function update(Request $request, $id, $status){
-
+    public function update(Request $request, $id){
         $pedido = Pedido::findOrFail($id);
-
-        $pedido->update([
-            'status' => $status,
-        ]);
-
-        $pedidos = Pedido::paginate(20); 
-        return view('pedidos.index', ['pedidos' => $pedidos]);
+        $cliente = Cliente::find($pedido->cliente_id);
+        $produtos = DB::table('pedidos')
+                ->join('pedido__produtos','pedidos.id','=','pedido__produtos.pedido_id')
+                ->where('pedido__produtos.pedido_id','=',$pedido->id)
+                ->join('produtos','pedido__produtos.produto_id','=','produtos.id')
+                ->where('pedido__produtos.status','=','Ativo')
+                ->select('produtos.*','pedido__produtos.qtd','pedido__produtos.id as op_id')
+                ->get();
+        return view('pedidos.admin_update', compact('pedido','cliente','produtos'));
     }
 
     public function delete($id){

@@ -241,14 +241,9 @@ return [
             'url'     => '/home',
         ],
         [
-            'text'    => 'Comprar',
+            'text'    => 'Loja',
             'icon'    => 'fas fa-store',
-            'url'     => '/comprar',
-        ],
-        [
-            'text'    => 'Carrinho',
-            'icon'    => 'fas fa-shopping-cart',
-            'url'     => '/carrinho',
+            'url'     => '/loja',
         ],
         [
             'text'    => 'Produtos',
@@ -261,6 +256,20 @@ return [
                 [
                     'text' => 'Cadastrar',
                     'url'  => '/produto/novo',
+                ],
+            ],
+        ],
+        [
+            'text'    => 'Clientes',
+            'icon'    => 'fas fa-users',
+            'submenu' => [
+                [
+                    'text' => 'Listar',
+                    'url'  => '/clientes',
+                ],
+                [
+                    'text' => 'Cadastrar',
+                    'url'  => '/cliente/novo',
                 ],
             ],
         ],

@@ -1,43 +1,38 @@
 @extends('adminlte::page')
-@section('title', 'Listando todos os registros')
+@section('title', 'Listando todos os clientes')
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
 
 @section('content')
-    <h1>Produtos</h1>
-    <a href="{{ route('registrar_produto') }}">Novo</a>
+    <h1>Clientes</h1>
+    <a href="{{ route('registrar_cliente') }}">Novo</a>
     <hr>
     <div class="container">
         <div class="col-md-12 table-responsive">
-            <table id="tabelaProdutos" class="table table-hover">
+            <table id="tabelaClientes" class="table table-hover">
                 <thead>
                     <tr>
                         <th>Id</th>
                         <th>Nome</th>
-                        <th>Custo</th>
-                        <th>Preço</th>
-                        <th>Quantidade</th>
+                        <th>Endereço</th>
+                        <th>Telefone</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($produtos as $produto)
+                    @forelse($clientes as $cliente)
                         <tr>
-                            <td class="white-space">{{ $produto->id }}</td>
-                            <td>{{ $produto->nome }}</td>
-                            <td>{{ $produto->custo }}</td>
-                            <td>{{ $produto->preco }}</td>
-                            <td>{{ $produto->quantidade }}</td>
+                            <td class="white-space">{{ $cliente->id }}</td>
+                            <td>{{ $cliente->nome }}</td>
+                            <td>{{ $cliente->endereco }}</td>
+                            <td>{{ $cliente->telefone }}</td>
                             <td class="text-center" style="display: flex; align-items: flex-start; justify-content: center;">
                                 <a class="btn btn-success"
-                                    href="{{ route('alterar_produto', ['id' => $produto->id]) }}">
+                                    href="{{ route('alterar_cliente', ['id' => $cliente->id]) }}">
                                     <i class="fa fa-edit"></i>
                                 </a>
-                                <a class="btn btn-primary" href="{{ route('ver_produto', ['id' => $produto->id]) }}">
-                                    <i class="fa fa-eye"></i>
-                                </a>
-                                <form action="{{ route('excluir_produto', ['id' => $produto->id]) }}" method="POST" onsubmit="return confirm('Está certo da exclusão?')">
+                                <form action="{{ route('excluir_cliente', ['id' => $cliente->id]) }}" method="POST" onsubmit="return confirm('Está certo da exclusão?')">
                                     @csrf
                                     <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
                                 </form>
@@ -64,7 +59,7 @@
 <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" ></script>
 <script>
     $(document).ready(function() {
-        $('#tabelaProdutos').DataTable();
+        $('#tabelaClientes').DataTable();
     });
 </script>
 @endpush
