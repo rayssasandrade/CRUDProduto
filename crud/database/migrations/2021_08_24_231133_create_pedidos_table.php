@@ -20,7 +20,6 @@ class CreatePedidosTable extends Migration
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')
             ->references('id')
-            ->onDelete('cascade')
             ->on('clientes');
             $table->timestamps();
         });
