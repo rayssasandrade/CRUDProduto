@@ -10,7 +10,9 @@ use App\Models\Pedido;
 
 use App\Models\Cliente;
 
-use App\Models\Pedido_Pedido;
+use App\Models\Produto;
+
+use App\Models\Pedido_Produto;
 
 use Illuminate\Support\Facades\DB;
 
@@ -19,6 +21,12 @@ class PedidosController extends Controller
     public function index(){
         $pedidos = Pedido::paginate(20); 
         return view('pedidos.index', ['pedidos' => $pedidos]);
+    }
+
+    public function create(){
+        $clientes = Cliente::pluck('nome', 'id');
+        $produtos = Produto::all();
+        return view('pedidos.create', ['clientes' => $clientes],  ['produtos' => $produtos]);
     }
 
     public function store(Request $request){
@@ -40,7 +48,7 @@ class PedidosController extends Controller
 
     public function show($id){
         $pedido = Pedido::findOrFail($id);
-        $cliente = Cliente::findOrFail($pedido->cliente_id);
+        $cliente = Cliente::find($pedido->cliente_id);
         $produtos = DB::table('pedidos')
                 ->join('pedido__produtos','pedidos.id','=','pedido__produtos.pedido_id')
                 ->where('pedido__produtos.pedido_id','=',$pedido->id)
@@ -49,6 +57,31 @@ class PedidosController extends Controller
                 ->select('produtos.*','pedido__produtos.quantidade')
                 ->get();
         return view('pedidos.show', ['pedido' => $pedido],  ['produtos' => $produtos], ['cliente' => $cliente]);
+    }
+
+    function store_produto_pedido(PedidoRequest $request)
+    {
+        if($request->pedido_id){
+            $pedido = Pedido::find($request->pedido_id);
+        } else {
+            $pedido = Pedido::create([
+                'cliente_id'=>$request->cliente_id,
+                'valor'=> 0.0,
+                'status'=>'Aberto'
+            ]);
+        }
+        $cliente = Cliente::find($request->cliente_id);
+        $produtos = Produto::all();
+        $produto = Produto::find($request->produto_id);
+        $pedido_produto = Pedido_Produto::create([
+            'pedido_id'=>$pedido->id,
+            'produto_id'=>$request->produto_id,
+            'quantidade'=>$request->quantidade,
+            'status'=>'Ativo'
+        ]);
+        $pedido->valor += ($produto->preco * $request->quantidade);
+        $pedido->save();
+        return view('pedidos.index', compact('cliente','pedido','produtos', 'pedido_produto'));
     }
 
     public function edit($id){
@@ -62,7 +95,7 @@ class PedidosController extends Controller
         ->select('produtos.*','pedido__produtos.qtd','pedido__produtos.id as op_id')
         ->get();
         $cliente = Cliente::find($pedido->cliente_id);
-        return view('pedidos.edit', ['pedido' => $pedido], ['cliente' => $cliente], ['produtos' => $produtos]);
+        return view('pedidos.edit', ['pedido' => $pedido], ['produtos' => $produtos], ['cliente' => $cliente]);
     }
 
     public function update(Request $request, $id){

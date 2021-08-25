@@ -40,3 +40,7 @@ Route::get('/pedido/editar/{id}', [App\Http\Controllers\PedidosController::class
 Route::post('/pedido/editar/{id}', [App\Http\Controllers\PedidosController::class, 'update'])->name('alterar_pedido');
 Route::get('/pedido/excluir/{id}', [App\Http\Controllers\PedidosController::class, 'delete']);
 Route::post('/pedido/excluir/{id}', [App\Http\Controllers\PedidosController::class, 'destroy'])->name('excluir_pedido');
+Route::post('/pedidos/store_produto_pedido', [App\Http\Controllers\PedidosController::class, 'store_produto_pedido']);
+
+//CLIENTES
+Route::get('dropdownlist','DataController@getClientes');
