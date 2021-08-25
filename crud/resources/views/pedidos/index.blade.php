@@ -1,9 +1,12 @@
 @extends('adminlte::page')
 @section('title', 'Listando Pedidos')
 
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css" rel="stylesheet">
+
 @section('content')
     <h1>Pedidos</h1>
-    <a url="/loja">Voltar a Loja</a>
+    {{-- <a url="/loja">Voltar a Loja</a> --}}
     <hr>
     <div class="container">
         <div class="col-md-12 table-responsive">
@@ -14,6 +17,7 @@
                         <th>Cliente nº</th>
                         <th>Valor</th>
                         <th>Status</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,3 +57,13 @@
         </div>
     </div>
 @endsection
+
+@push('js')
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js" ></script>
+<script>
+    $(document).ready(function() {
+        $('#tabelaPedidos').DataTable();
+    });
+</script>
+@endpush
