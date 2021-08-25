@@ -1,11 +1,15 @@
 @extends('adminlte::page')
-@section('title', 'Criando produto')
+@section('title', 'Criando pedido')
 
 @section('content')
-    <h1>Novo</h1>
+    <h1>Novo Pedido</h1>
     <div class="col-md-5">
-        <form action="{{ route('registrar_produto')}}" method="POST">
+        <form action="{{ route('registrar_pedido')}}" method="POST">
             @csrf
+            {{Form::select('cliente_id',
+               $clientes,
+               $cliente->cliente_id,
+               ['id'=>'myselect','class' =>'form-control'])}}
             <label for="">Nome</label> <br />
             <input type="text" name="nome" class="form-control"> <br />
             <label for="">Custo</label> <br />

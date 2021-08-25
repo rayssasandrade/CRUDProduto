@@ -29,9 +29,6 @@ Route::post('/produto/editar/{id}', [App\Http\Controllers\ProdutosController::cl
 Route::get('/produto/excluir/{id}', [App\Http\Controllers\ProdutosController::class, 'delete']);
 Route::post('/produto/excluir/{id}', [App\Http\Controllers\ProdutosController::class, 'destroy'])->name('excluir_produto');
 
-//LOJA
-Route::get('/loja', [App\Http\Controllers\ProdutosController::class, 'loja']);
-
 //PEDIDO
 
 Route::get('/pedido/novo', [App\Http\Controllers\PedidosController::class, 'create']);

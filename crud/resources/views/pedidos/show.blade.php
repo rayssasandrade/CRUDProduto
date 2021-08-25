@@ -1,16 +1,14 @@
 @extends('adminlte::page')
-@section('title', 'Detalhes do produto')
+@section('title', 'Visualizar Pedido')
 
 @section('content')
-    <h1>Detalhes</h1>
-    <div class="col-md-5">
-        <label for="">Nome</label> <br />
-        <input type="text" name="nome" class="form-control" value="{{ $produto->nome }}"> <br />
-        <label for="">Custo</label> <br />
-        <input type="text" name="custo" class="form-control" value="{{ $produto->custo }}"> <br />
-        <label for="">Preço</label> <br />
-        <input type="text" name="preco" class="form-control" value="{{ $produto->preco }}"> <br />
-        <label for="">Quantidade</label> <br />
-        <input type="text" name="quantidade" class="form-control" value="{{ $produto->quantidade }}"> <br />
-    </div>
+<h1>Pedido</h1>
+<ul class="form-control">
+    <li class="list-group-item">Número do Pedido: {{$pedido->id}}</li>
+    <li class="list-group-item">Cliente: {{$cliente->nome}}</li>
+    @foreach($produtos as $produto)
+        <li class="list-group-item">Produto: {{$produto->nome}} | Quantidade: {{$produto->quantidade}}</li>
+    @endforeach
+    <li class="list-group-item">R${{$pedido->valor}}</li>
+</ul>
 @endsection

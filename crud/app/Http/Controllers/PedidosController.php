@@ -40,7 +40,15 @@ class PedidosController extends Controller
 
     public function show($id){
         $pedido = Pedido::findOrFail($id);
-        return view('pedidos.show', ['pedido' => $pedido]);
+        $cliente = Cliente::findOrFail($pedido->cliente_id);
+        $produtos = DB::table('pedidos')
+                ->join('pedido__produtos','pedidos.id','=','pedido__produtos.pedido_id')
+                ->where('pedido__produtos.pedido_id','=',$pedido->id)
+                ->join('produtos','pedido__produtos.produto_id','=','produtos.id')
+                ->where('pedido__produtos.status','=','Ativo')
+                ->select('produtos.*','pedido__produtos.quantidade')
+                ->get();
+        return view('pedidos.show', ['pedido' => $pedido],  ['produtos' => $produtos], ['cliente' => $cliente]);
     }
 
     public function edit($id){

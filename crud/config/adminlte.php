@@ -243,7 +243,7 @@ return [
         [
             'text'    => 'Loja',
             'icon'    => 'fas fa-store',
-            'url'     => '/loja',
+            'url'     => '/pedido/novo',
         ],
         [
             'text'    => 'Produtos',
