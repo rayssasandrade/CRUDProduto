@@ -14,16 +14,14 @@ class CreatePedidosTable extends Migration
     public function up()
     {
         Schema::create('pedidos', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->decimal('valor',5,2);
+            $table->enum('status', ['Aberto', 'Pago', 'Cancelado']);
             $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')
-            ->references('id')->on('users');
-            $table->integer('produto_id')->unsigned();
-            $table->foreign('produto_id')
-            ->references('id')->on('produtos');
-            $table->integer('quantidade');
-            $table->float('total', 8, 2);
-            $table->integer('status');
+            ->references('id')
+            ->onDelete('cascade')
+            ->on('clientes');
             $table->timestamps();
         });
     }

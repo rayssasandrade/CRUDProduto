@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pedido extends Model
 {
-    protected $fillable = ['cliente_id', 'produto_id' , 'quantidade' , 'total' , 'status'];
-
-    public function cliente()
+    protected $fillable = ['valor', 'status', 'cliente_id'];
+    public function pedidos_produtos()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(Pedidos_Produtos::class);
     }
-
-    public function produtos()
+    public function clientes()
     {
-        return $this->hasMany(Produto::class);
+        return $this->belongsTo(Cliente::class);
     }
-
 }
